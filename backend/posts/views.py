@@ -11,6 +11,7 @@ from .serializers import PostSerializer
 
 
 class Posts(APIView):
+    """게시물 view"""
 
     # def get_permissions(self):
     #     if self.request.method == "POST":
@@ -54,6 +55,7 @@ class Posts(APIView):
 
 
 class PostDetail(APIView):
+    """게시물 세부 내역"""
 
     def get(self, request, pk):
         try:
@@ -71,8 +73,10 @@ class PostDetail(APIView):
 
 
 class PostCount(APIView):
+    """게시물 갯수"""
 
     def get(self, request):
+        """갯수 조회"""
         post_count = Post.objects.count()
         return Response(
             post_count,

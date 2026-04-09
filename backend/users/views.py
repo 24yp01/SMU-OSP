@@ -16,6 +16,7 @@ from .serializers import (
 
 
 class MyInfo(APIView):
+    """개인정보 조회"""
 
     permission_classes = [IsAuthenticated]
 
@@ -29,6 +30,7 @@ class MyInfo(APIView):
         )
 
     def put(self, request):
+        """수정"""
         user = request.user
         serializer = PrivateUserSerializer(
             user,
@@ -46,6 +48,7 @@ class MyInfo(APIView):
             return Response(serializer.errors)
 
     def delete(self, request):
+        """삭제"""
         user = request.user
 
         user.delete()
@@ -54,8 +57,10 @@ class MyInfo(APIView):
 
 
 class Users(APIView):
+    """사용자"""
 
     def get(self, request):
+        """조회"""
         sort_by = request.query_params.get("sort_by")
         valid_sort_fields = ["commit", "star", "pr", "issue", "score"]
 
@@ -106,6 +111,7 @@ class Users(APIView):
         )
 
     def post(self, request):
+        """등록"""
         password = request.data.get("password")
         if not password:
             raise ParseError
@@ -124,8 +130,10 @@ class Users(APIView):
 
 
 class PublicUser(APIView):
+    """공개 사용자"""
 
     def get(self, request, username):
+        """공개 사용자 조회"""
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
@@ -138,6 +146,7 @@ class PublicUser(APIView):
 
 
 class LogIn(APIView):
+    """로그인"""
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
@@ -156,6 +165,7 @@ class LogIn(APIView):
 
 
 class LogOut(APIView):
+    """로그아웃"""
 
     permission_classes = [IsAuthenticated]
 
@@ -165,6 +175,7 @@ class LogOut(APIView):
 
 
 class GithubLogIn(APIView):
+    """깃허브 로그인"""
 
     def post(self, request):
 
@@ -193,6 +204,7 @@ class GithubLogIn(APIView):
 
 
 class GithubRegister(APIView):
+    """깃허브 등록 (목적 잘 모르겠음)"""
 
     def post(self, request):
 
@@ -234,6 +246,7 @@ class GithubRegister(APIView):
 
 
 class CheckUserExist(APIView):
+    """사용자 존재 여부 확인"""
 
     def post(self, request):
         try:
